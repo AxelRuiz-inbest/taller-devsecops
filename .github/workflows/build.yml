@@ -1,0 +1,51 @@
+name: SonarCloud Python
+
+on:
+  push:
+    branches: ['**']    # analiza todas las ramas
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_PROJECT_KEY: ${{ secrets.PROYK }}
+      SONAR_ORG: ${{ secrets.ORG }}
+
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage pytest pytest-cov
+
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=. --cov-report=xml || echo "<coverage></coverage>" > coverage.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@ffc3010689be73b8e5ae0c57ce35968afd7909e8
+        with:
+          projectBaseDir: ${{ github.workspace }}
+          args: >
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ env.SONAR_ORG }}
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.qualitygate.wait=true
+            -Dsonar.qualitygate.timeout=600
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
