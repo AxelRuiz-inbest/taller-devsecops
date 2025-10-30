@@ -26,3 +26,4 @@ def get_user():
 
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0', port=5000)
+# Juan Pablo González Jiménez, Ingeniería en computación, CUALTOS
