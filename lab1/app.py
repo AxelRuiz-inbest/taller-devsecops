@@ -1,3 +1,7 @@
+#CESAR GIOVANNY CARDENAS OLIVARES
+#CIENCIAS COMPUTACIONALES CUTONALA
+
+
 from flask import Flask, request, jsonify
 import sqlite3
 
