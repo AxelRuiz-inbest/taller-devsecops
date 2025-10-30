@@ -11,7 +11,7 @@ def get_db():
 
 @app.route('/')
 def home():
-    return "Lab 1: API vulnerable a SQL Injection"
+    return "Lab 1: API corregida (uso de consultas parametrizadas)"
 
 @app.route('/user')
 def get_user():
@@ -19,11 +19,10 @@ def get_user():
     conn = get_db()
     cur = conn.cursor()
     query = "SELECT id, name, email FROM users WHERE name = '{}';".format(name)
-    cur.execute(query)
     rows = cur.fetchall()
     result = [dict(row) for row in rows]
     conn.close()
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=5000)
