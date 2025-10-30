@@ -18,8 +18,7 @@ def get_user():
     name = request.args.get('name', '')
     conn = get_db()
     cur = conn.cursor()
-    query = "SELECT * FROM users;".format(name)
-    cur.execute(query)
+    cur.execute("SELECT id, name, email FROM users WHERE name = ?",(name),)
     rows = cur.fetchall()
     results = [dict(row) for row in rows]
     conn.close()
