@@ -22,9 +22,8 @@ def get_user():
     name = request.args.get("name", "")
     conn = get_db()
     cur = conn.cursor()
-    query = "SELECT id, name, email FROM users WHERE name = '{}';".format(name)
     # query = "SELECT * FROM users;"
-    cur.execute(query)
+    cur.execute("SELECT id, name, email FROM users WHERE name = ?", (name,))
     rows = cur.fetchall()
     result = [dict(row) for row in rows]
     conn.close()
@@ -32,4 +31,4 @@ def get_user():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=False, host="0.0.0.0", port=5000)
