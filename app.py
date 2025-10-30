@@ -11,15 +11,14 @@ def get_db():
 
 @app.route('/')
 def home():
-    return "Lab 1: API Vulnerable a SQL Injection"
+    return "Lab 1: API corregida (uso de consultas parametrizadas)"
 
 @app.route('/user')
 def get_user():
     name = request.args.get('name', '')
     conn = get_db()
     cur = conn.cursor()
-    query = "SELECT id, name, email FROM users WHERE name = '{}'";format(name)
-    cur.execute(query)
+    cur.execute("SELECT id, name, email FROM users WHERE name = ?", (name,))
     rows = cur.fetchall()
     result = [dict(row) for row in rows]
     conn.close()
