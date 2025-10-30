@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 import sqlite3
 
+
+app = Flask(__name__)
 DB_PATH = "vulnerable.db"
 
 def get_db():
@@ -8,19 +10,17 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Lab 1: API vulnerable a SQL Injection'
+    return 'Lab 1: API Corregida a SQL Injection'
 
 @app.route('/user')
 def get_user():
     name = request.args.get('name', '')
     conn = get_db()
     cur = conn.cursor()
-    query = "SELECT id, name, email FROM users WHERE name = '{}'".format(name)
-    cur.execute(query)
+    cur.execute("SELECT id, name, email FROM users WHERE name = '?'",(name))
     rows = cur.fetchall()
     result = [dict(row) for row in rows]
     conn.close()
