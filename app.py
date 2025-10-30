@@ -26,3 +26,6 @@ def get_user():
 
 if __name__ == '_main_':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+    #Alberto Guadalupe Hernandez Valencia, 5to Semestre, ingenieria en sistemas computacionales
