@@ -18,7 +18,7 @@ def get_user():
   name = request.args.get('name', '')
   conn = get_db()
   cur = conn.cursor()
-  query = "SELECT id, name, email FROM users WHERE name = '{}';".format(name)
+  query = ("SELECT id, name, email FROM users WHERE name = ?", (name,))
   cur.execute(query)
   rows = cur.fetchall()
   result = [dict(row) for row in rows]
@@ -26,4 +26,4 @@ def get_user():
   return jsonify(result)
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=5000)
+  app.run(debug=False, host='0.0.0.0', port=5000)
