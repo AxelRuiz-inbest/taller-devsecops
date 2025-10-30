@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 import sqlite3
-
 app = Flask(__name__)
 DB_PATH = "vulnerable.db"
 
@@ -28,3 +27,5 @@ def get_user():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+    
+    #JAASIEL FREGOZO ARÉCHIGA, INGENIERÍA EN CIENCIAS COMPUTACIONALES, CUTONALÁ
