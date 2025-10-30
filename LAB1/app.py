@@ -1,3 +1,9 @@
+# Diego Josuan Ornelas Durán
+# Centro Universitario de Los Altos
+# Universidad de Guadalajara
+# DevSecOps Taller
+# Tepatitlan de Morelos, Jalisco
+# Ingeniería en Computación
 from flask import Flask, request, jsonify
 import sqlite3
 
