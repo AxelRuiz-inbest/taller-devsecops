@@ -18,12 +18,11 @@ def get_user():
     name = request.args.get('name', '')
     conn = get_db()
     cur = conn.cursor()
-    query = "SELECT * from users".format(name)
-    cur.execute(query)
+    cur.execute("SELECT id, name, email FROM users WHERE name = ?",(name),)
     rows = cur.fetchall()
     results = [dict(row) for row in rows]
     conn.close()
     return jsonify(results)
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     app.run(debug=True, host='0.0.0.0', port=5000)
